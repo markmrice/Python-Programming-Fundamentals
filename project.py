@@ -25,7 +25,7 @@ def create_knight(knights):
     knights_data['damage'] = (random.randint(10,20))
 
     # Randomly assign the knights luck
-    knights_data['luck'] = (random.randint(0,100))
+    knights_data['luck'] = (random.randint(10,24))
 
     # Adds the information to the knight
     knights.append(knights_data)
@@ -75,21 +75,119 @@ def select_knight(knights):
     # Reset the list to print all the knights you have
     knights_number = 0
     print("What Knight would you like to update?\n")
+
     # Iterate through all knights in our list to print
     while knights_number < int(len(knights)):
         print(str(knights_number + 1) + "- Knight's name : " + str(knights[knights_number]['name']))
         knights_number += 1
 
-    # Choose the knight and pass it into change_data
-    selection = (int(input("\nSelect the Knights number: ")) - 1)
-    change_data(knights[selection])
+        # Choose the knight and pass it into change_data
+        selection = (int(input("\nSelect the Knights number: ")) - 1)
+        change_data(knights[selection])
+
+# Select two knights to have a duel with
+def select_duelists(knights):
+
+    # Reset the list to print all the knights you have
+    knights_number = 0
+    print("What Knight would you like to start a duel?\n")
+    
+    # Iterate through all knights in our list to print and select first duelist
+    while knights_number < int(len(knights)):
+        print(str(knights_number + 1) + "- Knight's name : " + str(knights[knights_number]['name']))
+        knights_number += 1
+
+    try:
+
+        # Choose the knight to be the first duelist
+        duelist_one = (int(input("\nSelect the Knights number: ")) - 1)
+
+        # Reset the list to print all the knights you have
+        knights_number = 0
+        
+        print("What Knight will " + str(knights[knights_number]['name']) + " challenge to a duel? \n")
+        # Iterate through all knights in our list to print
+        while knights_number < int(len(knights)):
+            if knights_number != duelist_one:
+                print(str(knights_number + 1) + "- Knight's name : " + str(knights[knights_number]['name']))
+            knights_number += 1
+                
+        # Choose the knight to be the second duelist
+        duelist_two = (int(input("\nSelect the Knights number: ")) - 1)
+
+        # Start the duel with the selected duelists
+        duel(duelist_one, duelist_two)
+
+    except:
+        print("**--- Try Again ---")
+        select_duelists(knights)
+
+# Start a duel between the two selected knights
+def duel(knight_one, knight_two):
+    print("\nThe duel between " + knights[knight_one]['name'] + " and " + knights[knight_two]['name'] + " begins!\n")
+
+    # Find which knight gets the iniative
+    iniative = knight_two
+    second = knight_one
+    knight_one_init = int(knights[knight_one]['luck']) * random.randint(1,20)
+    knight_two_init = int(knights[knight_two]['luck']) * random.randint(1,20)
+    if (knight_one_init >= knight_two_init):
+        iniative = knight_one
+        second = knight_two
+
+    # Initialise HP variables of the knights
+    initial_hp = int(knights[knight_one]['hp']) 
+    second_hp = int(knights[knight_two]['hp'])
+    initial_dmg = int(knights[knight_one]['damage']) 
+    second_dmg = int(knights[knight_two]['damage'])
+
+    # Combat loop
+    while int(initial_hp) > 0 and int(second_hp) > 0:
+        # Initial Knights attack turn
+        # Check if attack hits or misses
+        if int(knights[iniative]['luck']) * random.randint(2,4) >= 35:
+            # Attack hits
+            # Check if the attack is a critical hit and inflict damage
+            if int(knights[iniative]['luck']) * random.randint(1,5) >= 50:
+                second_hp -= initial_dmg * 2
+                print("The " + str(knights[iniative]['colour']) + " Knight swings with his " + str(knights[iniative]['weapon']) + " and delivers a critical hit!")
+            # Inflict normal damage to second knight
+            else:
+                second_hp -= initial_dmg
+                print("The " + str(knights[iniative]['colour']) + " Knight swings with his " + str(knights[iniative]['weapon']) + " and hits!")
+            if (second_hp <= 0):
+                print("The " + str(knights[iniative]['colour']) + " Knight wins the duel!")
+                break
+        else:
+            # Attack misses
+            print("The " + str(knights[iniative]['colour']) + " Knight swings with his " + str(knights[iniative]['weapon']) + " and misses!")
+
+        # Second Knights attack turn
+        # Check if attack hits or misses
+        if int(knights[second]['luck']) * random.randint(2,4) >= 35:
+            # Attack hits
+            # Check if the attack is a critical hit and inflict damage
+            if int(knights[second]['luck']) * random.randint(1,5) >= 50:
+                initial_hp -= second_dmg * 2
+                print("The " + str(knights[second]['colour']) + " Knight swings with his " + str(knights[second]['weapon']) + " and delivers a critical hit!")
+            # Inflict normal damage to initial knight
+            else:
+                initial_hp -= second_dmg
+                print("The " + str(knights[second]['colour']) + " Knight swings with his " + str(knights[second]['weapon']) + " and hits!")
+            if (initial_hp <= 0):
+                print("The " + str(knights[second]['colour']) + " Knight wins the duel!")
+                break
+        else:
+            # Attack misses
+            print("The " + str(knights[second]['colour']) + " Knight swings with his " + str(knights[second]['weapon']) + " and misses!")
 
 # This is the menu and we make our selections here
 def menu(knights_number):
     # Print the display options
     print("What do you want to do?")
     print("1: Create a new knight")
-    print("2: Update your knight")
+    print("2: Update your knights")
+    print("3: Duel your knights")
     print("0: Exit")
 
     # Allow a selection to be tested
@@ -116,6 +214,15 @@ def menu(knights_number):
                 print("You need to create a knight first!\n")
             else:
                 select_knight(knights)
+            menu(knights_number)
+
+        # Select two knights to enter into a duel
+        elif select == 3:
+            #Check if you have at least two knights
+            if int(len(knights)) < 2:
+                print("You need at least two knights to duel!")
+            else:
+                select_duelists(knights)
             menu(knights_number)
 
         # Exit the program
