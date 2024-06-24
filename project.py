@@ -327,9 +327,6 @@ def duel(knight_one, knight_two, knights):
         defender = attacker
         attacker = temp
 
-    # Go back to main menu after fight ends
-    #menu(0)
-
 
 # This is the menu and we make our selections here
 def menu(knights_number):
