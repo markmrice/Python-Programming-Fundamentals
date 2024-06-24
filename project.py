@@ -1,3 +1,4 @@
+import sys
 import random
 
 
@@ -98,7 +99,7 @@ def change_data(knights):
         
         # Return to the menu
         elif selection == 4:
-            menu(knights_number)
+           return
 
         # If no valid choice made
         else:
@@ -194,14 +195,14 @@ def select_duelists(knights):
         duelist_two = int(input("\nSelect the Knights number: ")) - 1
 
         # Start the duel with the selected duelists
-        duel(duelist_one, duelist_two)
+        duel(duelist_one, duelist_two, knights)
     except:
         print("--- Try Again ---")
         select_duelists(knights)
 
 
 # Start a duel between the two selected knights
-def duel(knight_one, knight_two):
+def duel(knight_one, knight_two, knights):
     """This function serves as the combat loop between the two 
     knights that were selected to duel.
 
@@ -327,7 +328,7 @@ def duel(knight_one, knight_two):
         attacker = temp
 
     # Go back to main menu after fight ends
-    menu(knights_number)
+    #menu(0)
 
 
 # This is the menu and we make our selections here
@@ -422,7 +423,7 @@ def menu(knights_number):
     except:
         print("--- Try Again! ---\n")
         menu(knights_number)
-
+    
 
 # Setting the scene
 knights_number = 0
