@@ -66,7 +66,7 @@ def change_data(knights):
     print("1: Knights Name: " + str(knights["name"]))
     print("2: Colour Of Armor: " + str(knights["colour"]))
     print("3: Knights Weapon: " + str(knights["weapon"]))
-    print("4: Exit to menu")
+    print("0: Exit to menu")
 
     # Allow a selection to be tested
     try:
@@ -98,7 +98,7 @@ def change_data(knights):
             return
         
         # Return to the menu
-        elif selection == 4:
+        elif selection == 0:
            return
 
         # If no valid choice made
