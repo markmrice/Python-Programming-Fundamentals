@@ -1,0 +1,4 @@
+My assignment for the WYWM python course.
+
+Create knights, choosing their names, armor colours and weapons, with randomly generated health and luck attributes. You can then alter their name, colour and weapon after they are created.
+If you make 2 or more knights you can makethem duel each other. They take turns attacking each other, with a chance to miss or hit, then a chance to do a critical hit for double damage, using random generated ints.
