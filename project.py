@@ -1,4 +1,4 @@
-import random
+from random import randint as rand
 
 
 # Call for this when you want to create a new knight.
@@ -36,13 +36,13 @@ def create_knight(knights):
         ).lower()
 
         # Randomly assign the knights health points.
-        knights_data["hp"] = random.randint(70, 100)
+        knights_data["hp"] = rand(70, 100)
 
         # Randomly assign the knights baseline damage per hit.
-        knights_data["damage"] = random.randint(10, 20)
+        knights_data["damage"] = rand(10, 20)
 
         # Randomly assign the knights luck.
-        knights_data["luck"] = random.randint(10, 24)
+        knights_data["luck"] = rand(10, 24)
 
         # Adds the information to the knight.
         knights.append(knights_data)
@@ -266,9 +266,9 @@ def duel(knight_one, knight_two, knights):
 
     # Do a luck check to see who gets the initiative,
     # swap knight one to attacker if he wins.
-    if int(knights[knight_one]["luck"]) * random.randint(1, 20) > int(
+    if int(knights[knight_one]["luck"]) * rand(1, 20) > int(
         knights[knight_two]["luck"]
-    ) * random.randint(1, 20):
+    ) * rand(1, 20):
         attacker = knights[knight_one]
         defender = knights[knight_two]
 
@@ -281,11 +281,11 @@ def duel(knight_one, knight_two, knights):
     while int(attacker_hp) > 0 and int(defender_hp) > 0:
 
         # Check if attack hits or misses.
-        if int(attacker["luck"]) * random.randint(2, 4) >= 35:
+        if int(attacker["luck"]) * rand(2, 4) >= 35:
 
             # Attack hits
             # Check if the attack is a critical hit and inflict damage.
-            if int(attacker["luck"]) * random.randint(1, 5) >= 50:
+            if int(attacker["luck"]) * rand(1, 5) >= 50:
                 defender_hp -= attacker["damage"] * 2
                 print(
                     "The "
@@ -418,7 +418,7 @@ def menu(knights_number):
             if int(len(knights)) == 0:
                 print(
                     "Wait... You have no knights! Have a number: "
-                    + str(random.randint(0, 100))
+                    + str(rand(0, 100))
                 )
 
         # Required for catching an integer.
