@@ -15,41 +15,42 @@ def create_knight(knights):
 
     # Creates a new List for the knight.
     knights_data = {}
-    print("Lets create a knight!")
+    knight_key = ("name", "colour", "weapon", "healthpoints", "damage", "luck")
+    print("Lets create a knight!\n")
 
     # Set the information up for the knight.
     # Allow a selection to be tested.
     try:
         # Set the knights name.
-        knights_data["name"] = (
+        knights_data[knight_key[0]] = (
             str(input("What is the knights name: "))
             ).capitalize()
 
         # Set the knights armour colour.
-        knights_data["colour"] = (
+        knights_data[knight_key[1]] = (
             str(input("What is the colour of the knights armor: "))
         ).capitalize()
 
         # Set the knights weapon of choice.
-        knights_data["weapon"] = (
+        knights_data[knight_key[2]] = (
             str(input("What weapon does the knight wield?: "))
         ).lower()
 
         # Randomly assign the knights health points.
-        knights_data["hp"] = rand(70, 100)
+        knights_data[knight_key[3]] = rand(70, 100)
 
         # Randomly assign the knights baseline damage per hit.
-        knights_data["damage"] = rand(10, 20)
+        knights_data[knight_key[4]] = rand(10, 20)
 
         # Randomly assign the knights luck.
-        knights_data["luck"] = rand(10, 24)
+        knights_data[knight_key[5]] = rand(10, 24)
 
         # Adds the information to the knight.
         knights.append(knights_data)
 
     # We are looing for an valid selection.
     except:
-        print("--- Try Again ---")
+        print("\n--- Try Again ---\n")
         create_knight(knights)
 
 
@@ -59,7 +60,7 @@ def change_data(knights):
     of an existing knight with new user inputs as 
     strings and automatically formats.
 
-    Hp, damage and luck cannot be altered after creation.
+    healthpoints, damage and luck cannot be altered after creation.
     """
 
     # Print menu of ways to edit knight.
@@ -110,7 +111,7 @@ def change_data(knights):
 
     # We are looing for an integer selection.
     except:
-        print("--- Try Again ---")
+        print("\n--- Try Again ---\n")
         change_data(knights)
 
 
@@ -144,7 +145,7 @@ def select_knight(knights):
 
     # We are looking for a valid selection.
     except:
-        print("--- Try Again ---")
+        print("\n--- Try Again ---\n")
         select_knight(knights)
 
 
@@ -181,7 +182,7 @@ def select_duelists(knights):
         # Reset the list to print all the knights you have.
         knights_number = 0
         print(
-            "What Knight will "
+            "\nWhat Knight will "
             + str(knights[knights_number]["name"])
             + " challenge to a duel? \n"
         )
@@ -206,7 +207,7 @@ def select_duelists(knights):
 
     # We are looking for a valid selection.
     except:
-        print("--- Try Again ---")
+        print("\n--- Try Again ---\n")
         select_duelists(knights)
 
 
@@ -266,16 +267,16 @@ def duel(knight_one, knight_two, knights):
 
     # Do a luck check to see who gets the initiative,
     # swap knight one to attacker if he wins.
-    if int(knights[knight_one]["luck"]) * rand(1, 20) > int(
+    if int(knights[knight_one]["luck"]) * rand(1, 4) > int(
         knights[knight_two]["luck"]
-    ) * rand(1, 20):
+    ) * rand(1, 4):
         attacker = knights[knight_one]
         defender = knights[knight_two]
 
     # Save the knights health points to a temporary variable,
     # so that we are not reducing the actual hp on the knight.
-    attacker_hp = int(attacker["hp"])
-    defender_hp = int(defender["hp"])
+    attacker_hp = int(attacker["healthpoints"])
+    defender_hp = int(defender["healthpoints"])
 
     # Combat loop
     while int(attacker_hp) > 0 and int(defender_hp) > 0:
@@ -285,7 +286,7 @@ def duel(knight_one, knight_two, knights):
 
             # Attack hits
             # Check if the attack is a critical hit and inflict damage.
-            if int(attacker["luck"]) * rand(1, 5) >= 50:
+            if int(attacker["luck"]) * rand(1, 5) >= 60:
                 defender_hp -= attacker["damage"] * 2
                 print(
                     "The "
@@ -352,7 +353,7 @@ def menu(knights_number):
     """
 
     # Print the display options.
-    print("\nWhat do you want to do?")
+    print("\nWhat do you want to do?\n")
     print("1: Create a new knight")
     print("2: Update your knights")
     print("3: Duel your knights")
@@ -413,7 +414,7 @@ def menu(knights_number):
                     + str(knights[knights_number]["weapon"])
                 )
                 knights_number += 1
-
+            
             # If no knights were made.
             if int(len(knights)) == 0:
                 print(
@@ -423,14 +424,13 @@ def menu(knights_number):
 
         # Required for catching an integer.
         else:
-            print("--- Try Again! ---\n")
-            menu(knights_number)
+            print("\n--- Try Again! ---\n")
+            menu(knights_number)    
 
     # We are looking for integer selection.
     except:
-        print("--- Try Again! ---\n")
+        print("\n--- Try Again! ---\n")
         menu(knights_number)
-    
 
 # Setting the scene.
 knights_number = 0
